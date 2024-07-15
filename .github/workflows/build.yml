@@ -1,4 +1,4 @@
-name: Push-to-server
+name: Deploy React App
 
 on:
   push:
@@ -6,18 +6,17 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Push to server
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: "14"
 
       - name: Install dependencies
         run: npm install
@@ -25,9 +24,7 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Install PM2
-        run: npm install -g pm2
-
-      - name: Start or Restart MYAPP
+      - name: Deploy with serve
         run: |
-          pm2 start build/server.js --name MYAPP || pm2 restart MYAPP
+          npm install -g serve
+          pm2 start "serve -s build -l 3000" --name reactapp || pm2 restart reactapp
