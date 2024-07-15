@@ -28,6 +28,6 @@ jobs:
       - name: Install PM2
         run: npm install -g pm2
 
-      - name: Start or Restart React app
+      - name: Start or Restart MYAPP
         run: |
-          pm2 start build/server.js --name reactapp || pm2 restart reactapp
+          pm2 start build/server.js --name MYAPP || pm2 restart MYAPP
