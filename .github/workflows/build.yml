@@ -24,7 +24,10 @@ jobs:
       - name: Build React app
         run: npm run build
 
-      - name: Deploy with serve
+      - name: Copy files to Nginx
         run: |
-          npm install -g serve
-          pm2 start "serve -s build -l 3000" --name reactapp || pm2 restart reactapp
+          sudo apt-get update
+          sudo apt-get install -y nginx
+          sudo rm -rf /var/www/html/*
+          sudo cp -r build/* /var/www/html/
+          sudo systemctl restart nginx
