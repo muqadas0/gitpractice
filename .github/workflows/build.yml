@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v1
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -23,6 +24,9 @@ jobs:
 
       - name: Build React app
         run: npm run build
+
+      - name: Install PM2
+        run: npm install -g pm2
 
       - name: Serve React app
         run: pm2 restart reactapp
